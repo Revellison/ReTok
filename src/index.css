@@ -26,6 +26,85 @@ body {
   user-select: none;
 }
 
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: black;
+  overflow: hidden;
+}
+
+.video-actions {
+  position: absolute;
+  right: 20px;
+  bottom: 200px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.user-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.user-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-button button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  outline: none;
+}
+
+.user-button button:focus {
+  outline: none;
+}
+
+.user-button button svg {
+  width: 38px;
+  height: 38px;
+  color: #fff;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+  transition: all 0.3s ease;
+}
+
+.button-count {
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  min-width: 30px;
+  text-align: center;
+}
+
+.user-button button:hover svg {
+  transform: scale(1.1);
+}
+
+.user-button button.active svg {
+  color: #ff0b0b;
+}
+
+.user-button button.active svg path {
+  fill: #ff0b0b;
+}
+
 .container {
   width: 100%;
   height: 100vh;
@@ -72,14 +151,11 @@ body {
   opacity: 0.5;
 }
 
-.video-container {
+.player-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  background: black;
-  overflow: hidden;
+  cursor: pointer;
 }
 
 .player {
@@ -102,6 +178,17 @@ body {
   background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 }
 
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.content-text {
+  flex: 1;
+}
+
 .card-title {
   margin: 0;
   font-size: 1.1rem;
@@ -116,6 +203,62 @@ body {
   display: none;
 }
 
+.avatar-container {
+  flex-shrink: 0;
+  position: relative;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+}
+
+.avatar-button {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #fff;
+  transition: all 0.3s ease;
+}
+
+.avatar-button:hover {
+  transform: scale(1.1);
+  border-color: #ff3b5c;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-plus {
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff3b5c;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #000;
+}
+
+.avatar-plus svg {
+  width: 14px;
+  height: 14px;
+  color: white;
+}
+
 @keyframes keyframes-fill {
   0% {
     transform: scale(0);
@@ -125,6 +268,34 @@ body {
   50% {
     transform: scale(1.1);
   }
+}
+
+.play-pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.play-pause-overlay.overlay-visible {
+  opacity: 1;
+}
+
+.play-pause-overlay.overlay-hidden {
+  opacity: 0;
+}
+
+.player-wrapper:hover .play-pause-overlay {
+  opacity: 0.6;
 }
 
 .play-pause-container {
@@ -157,36 +328,6 @@ body {
   animation: keyframes-fill 0.3s;
   width: 40px;
   height: 40px;
-}
-
-.play-pause-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  z-index: 2;
-  pointer-events: all;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.play-pause-overlay.overlay-visible {
-  opacity: 1;
-}
-
-.play-pause-overlay.overlay-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.video-container:hover .play-pause-overlay {
-  opacity: 0.6;
 }
 
 a {
@@ -243,18 +384,27 @@ button:focus-visible {
   }
 }
 
+.top-bar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .social-buttons {
   display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  padding: 0.5rem;
-  margin-top: auto;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-end;
 }
 
 .social-button {
   width: 40px;
   height: 40px;
-  padding: 0.5rem;
+  padding: 8px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.3);
