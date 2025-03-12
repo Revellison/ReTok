@@ -14,6 +14,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html{-webkit-tap-highlight-color: transparent;}
+
 body {
   display: flex;
   justify-content: center;
@@ -31,6 +33,7 @@ body {
   position: relative;
   touch-action: none;
   background: black;
+  overscroll-behavior: none;
 }
 
 .card {
@@ -42,10 +45,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  overscroll-behavior: none;
 }
 
 .card-enter {
@@ -73,6 +79,21 @@ body {
   display: flex;
   align-items: center;
   background: black;
+  overflow: hidden;
+}
+
+.player {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
+}
+
+.player video {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .card-content {
@@ -106,7 +127,6 @@ body {
   }
 }
 
-
 .play-pause-container {
   width: 80px;
   height: 80px;
@@ -120,6 +140,7 @@ body {
   user-select: none;
   fill: var(--color);
   transition: transform 0.3s ease;
+  pointer-events: all;
 }
 
 .play-pause-container:hover {
@@ -131,28 +152,12 @@ body {
   height: 40px;
 }
 
-.container .play {
+.play, .pause {
   position: absolute;
   animation: keyframes-fill 0.3s;
+  width: 40px;
+  height: 40px;
 }
-
-.container .pause {
-  position: absolute;
-  display: none;
-  animation: keyframes-fill 0.3s;
-}
-
-@keyframes keyframes-fill {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-
-  50% {
-    transform: scale(1.1);
-  }
-}
-
 
 .play-pause-overlay {
   position: absolute;
@@ -165,6 +170,23 @@ body {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  z-index: 2;
+  pointer-events: all;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.play-pause-overlay.overlay-visible {
+  opacity: 1;
+}
+
+.play-pause-overlay.overlay-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-container:hover .play-pause-overlay {
+  opacity: 0.6;
 }
 
 a {
