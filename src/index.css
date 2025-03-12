@@ -1,0 +1,256 @@
+:root {
+  font-family: 'Rubik', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  --bg-color: #000000;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--bg-color);
+  user-select: none;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  background: black;
+}
+
+.card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-enter {
+  transform: translateY(100%);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.card-enter-active {
+  transform: translateY(0);
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.card-exit {
+  transform: translateY(-100%);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: black;
+}
+
+.card-content {
+  padding: 0.5rem 1rem;
+  flex-shrink: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.card-description {
+  margin: 3px 0 0;
+  font-size: 0.9rem;
+}
+
+.video-controls {
+  display: none;
+}
+
+@keyframes keyframes-fill {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+
+.play-pause-container {
+  width: 80px;
+  height: 80px;
+  --color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: var(--color);
+  transition: transform 0.3s ease;
+}
+
+.play-pause-container:hover {
+  transform: scale(1.1);
+}
+
+.play-pause-container svg {
+  width: 40px;
+  height: 40px;
+}
+
+.container .play {
+  position: absolute;
+  animation: keyframes-fill 0.3s;
+}
+
+.container .pause {
+  position: absolute;
+  display: none;
+  animation: keyframes-fill 0.3s;
+}
+
+@keyframes keyframes-fill {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+
+.play-pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.social-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.5rem;
+  margin-top: auto;
+}
+
+.social-button {
+  width: 40px;
+  height: 40px;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+.social-button .icon {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
